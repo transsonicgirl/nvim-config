@@ -16,11 +16,3 @@ vim.keymap.set("n", "<C-t>", ":tabe ")
 -- Alpha keybind
 vim.keymap.set("n", "<leader>a", ":Alpha<CR>")
 
--- dap binds
-vim.keymap.set("n", "<Leader>b", ":DapToggleBreakpoint<CR>")
-vim.keymap.set("n", "<Leader>dc", ":DapContinue<CR>")
-vim.keymap.set("n", "<Leader>di", ":DapStepInto<CR>")
-vim.keymap.set("n", "<Leader>do", ":DapStepOver<CR>")
-vim.keymap.set("n", "<Leader>du", ":DapStepOut<CR>")
-vim.keymap.set("n", "<Leader>dn", ":DapNew<CR>")
-vim.keymap.set("n", "<Leader>dx", ":DapTerminate<CR>")

@@ -10,6 +10,15 @@ return {
         require("dapui").setup()
         local dapui = require("dapui")
 
+        -- dap binds
+        vim.keymap.set("n", "<Leader>b", ":DapToggleBreakpoint<CR>")
+        vim.keymap.set("n", "<Leader>dc", ":DapContinue<CR>")
+        vim.keymap.set("n", "<Leader>di", ":DapStepInto<CR>")
+        vim.keymap.set("n", "<Leader>do", ":DapStepOver<CR>")
+        vim.keymap.set("n", "<Leader>du", ":DapStepOut<CR>")
+        vim.keymap.set("n", "<Leader>dn", ":DapNew<CR>")
+        vim.keymap.set("n", "<Leader>dx", ":DapTerminate<CR>")
+
         -- python
         require("dap-python").setup("python3")
 
