@@ -13,6 +13,12 @@ return {
 
     { -- NVIM-CMP: snippet UI
         "hrsh7th/nvim-cmp",
+        dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-cmdline',
+        },
         config = function()
             -- Set up nvim-cmp.
             local cmp = require("cmp")
@@ -37,7 +43,8 @@ return {
                     ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
                 sources = cmp.config.sources({
-                    -- { name = "nvim_lsp" },
+                    { name = "friendly-snippets" },
+                    { name = "nvim_lsp" },
                     { name = "luasnip" }, -- For luasnip users.
                 }, {
                     { name = "buffer" },
