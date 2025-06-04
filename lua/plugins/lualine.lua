@@ -24,9 +24,8 @@ return {
                     },
                 },
                 sections = {
-                    lualine_a = { "hostname", "mode" },
+                    lualine_a = { "filename", "filesize" },
                     lualine_b = { "branch", "diff", "diagnostics" },
-                    lualine_c = { "filename", "filesize" },
                     lualine_x = { "encoding", "fileformat", "filetype" },
                     lualine_y = { "lsp_status" },
                     lualine_z = { "location", "cdate", "ctime"},

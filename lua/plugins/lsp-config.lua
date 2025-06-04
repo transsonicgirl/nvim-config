@@ -9,7 +9,7 @@ return{
     "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "asm_lsp", "astro", "bashls", "clangd", "cmake", "cssls", "html", "ltex", "lua_ls", "matlab_ls", "harper_ls", "rust_analyzer"}
+                ensure_installed = {"clangd", "cmake", "ltex", "lua_ls", "pylsp", "rust_analyzer"}
             })
         end
     },
@@ -19,16 +19,6 @@ return{
         config = function()
             local capabilities = require ('cmp_nvim_lsp').default_capabilities()
             local lspconfig = require("lspconfig")
-            lspconfig.asm_lsp.setup({
-                capabilities = capabilities
-            })
-            lspconfig.astro.setup({
-                capabilities = capabilities
-            })
-            lspconfig.bashls.setup({
-
-                capabilities = capabilities
-            })
             lspconfig.clangd.setup({
 
                 capabilities = capabilities
@@ -53,16 +43,11 @@ return{
 
                 capabilities = capabilities
             })
-            lspconfig.harper_ls.setup({
-
-                capabilities = capabilities
-            })
             lspconfig.rust_analyzer.setup({
 
                 capabilities = capabilities
             })
-            lspconfig.verible.setup({
-
+            lspconfig.pylsp.setup({
                 capabilities = capabilities
             })
         end
