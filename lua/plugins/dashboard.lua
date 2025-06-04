@@ -53,6 +53,14 @@ return {
 
             dashboard.section.header.opts.hl = "AlphaHeader"
 
+            dashboard.section.buttons.val = {
+                dashboard.button( "ff", "󰱼 Filesystem Search", ":Telescope find_files<CR>" ),
+                dashboard.button( "fg", "󱎸 Ripgrep Search", ":Telescope live_grep<CR>" ),
+                dashboard.button( "Sl", " Load Last Session", ":source Session.vim<CR>"),
+                dashboard.button( "Ss", "󰆓 Save Current Session", ":mksession!<CR>"),
+                dashboard.button( "wqa", "󰠜 Exit Neovim", ":wqa<CR>"),
+            }
+
             --[[ COWSAY HEADER
 			startify.section.header.val = {
 				" ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",

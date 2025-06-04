@@ -19,6 +19,8 @@ return {
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-cmdline',
+            'chrisgrieser/cmp-nerdfont',
+            'mtoohey31/cmp-fish',
         },
         config = function()
             -- Set up nvim-cmp.
@@ -50,6 +52,8 @@ return {
                 }, {
                     { name = "buffer" },
                     { name = "path" },
+                    { name = "nerdfont" },
+                    { name = "fish" },
                 }),
             })
 

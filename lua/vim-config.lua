@@ -27,3 +27,6 @@ vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", {silent=true, desc=
 -- sessions
 vim.keymap.set("n", "<leader>Ss", ":mksession!", {silent=true, desc="save current session"})
 vim.keymap.set("n", "<leader>Sl", ":source Session.vim", {silent=true, desc="load previous session"})
+
+-- splits
+vim.keymap.set("n", "<leader>vs", ":vs", {silent=true, desc="vertical split"})
