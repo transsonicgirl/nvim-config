@@ -13,6 +13,7 @@ vim.keymap.set("n", "<C-]>", ":tabn<CR>", {desc = "Next tab", silent=true})
 vim.keymap.set("n", "<C-[>", ":tabp<CR>", {desc = "Previous tab", silent=true})
 vim.keymap.set("n", "<C-t>", ":tabe<CR>", {desc = "New tab", silent=true})
 
+
 -- Alpha keybind
 vim.keymap.set("n", "<leader>a", ":Alpha<CR>", {desc = "Alpha"})
 
@@ -25,8 +26,8 @@ vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", {silent=true, desc=
 
 
 -- sessions
-vim.keymap.set("n", "<leader>Ss", ":mksession!", {silent=true, desc="save current session"})
-vim.keymap.set("n", "<leader>Sl", ":source Session.vim", {silent=true, desc="load previous session"})
+vim.keymap.set("n", "<leader>Ss", ":mksession!<CR>", {silent=true, desc="save current session"})
+vim.keymap.set("n", "<leader>Sl", ":source Session.vim<CR>", {silent=true, desc="load previous session"})
 
 -- splits
-vim.keymap.set("n", "<leader>vs", ":vs", {silent=true, desc="vertical split"})
+vim.keymap.set("n", "<leader>v", ":vs<CR>", {silent=true, desc="vertical split"})
