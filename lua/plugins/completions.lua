@@ -25,7 +25,9 @@ return {
         config = function()
             -- Set up nvim-cmp.
             local cmp = require("cmp")
+            local lsp_types = require('cmp.types').lsp
             require("luasnip.loaders.from_vscode").lazy_load()
+
 
             cmp.setup({
                 snippet = {
@@ -45,16 +47,60 @@ return {
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
+                completion = {
+                    autocomplete = false,
+                },
                 sources = cmp.config.sources({
-                    { name = "friendly-snippets" },
                     { name = "nvim_lsp" },
-                    { name = "luasnip" }, -- For luasnip users.
-                }, {
                     { name = "buffer" },
                     { name = "path" },
                     { name = "nerdfont" },
                     { name = "fish" },
                 }),
+                sorting = {
+                    comparators = {
+                        function(entry1, entry2)
+                            local kind_priority = {
+                                [lsp_types.CompletionItemKind.Method] = 100,
+                                [lsp_types.CompletionItemKind.Property] = 90,
+                                [lsp_types.CompletionItemKind.Field] = 80,
+                                [lsp_types.CompletionItemKind.Function] = 70,
+                                [lsp_types.CompletionItemKind.Variable] = 60,
+                                [lsp_types.CompletionItemKind.Snippet] = 0,
+                            }
+                            local kind1 = kind_priority[entry1:get_kind()] or 0
+                            local kind2 = kind_priority[entry2:get_kind()] or 0
+                            if kind1 ~= kind2 then
+                                return kind1 > kind2
+                            end
+                        end,
+                        cmp.config.compare.offset,
+                        cmp.config.compare.exact,
+                        cmp.config.compare.score,
+                        cmp.config.compare.kind,
+                        cmp.config.compare.sort_text,
+                        cmp.config.compare.length,
+                        cmp.config.compare.order,
+                    }
+                },
+                formatting = {
+                    fields = { "abbr", "kind", "menu" },
+                    max_width = 100,
+                    format = function(entry, vim_item)
+                        if entry.source.name == "nvim_lsp" then
+                            vim_item.menu = "LSP"
+                        elseif entry.source.name == "buffer" then 
+                            vim_item.menu = "BUF"
+                        elseif entry.source.name == "path" then 
+                            vim_item.menu = "PTH"
+                        elseif entry.source.name == "nerdfont" then
+                            vim_item.menu = "FNT"
+                        elseif entry.source.name == "fish" then 
+                            vim_item.menu = "FSH"
+                        end
+                        return vim_item
+                    end,
+                },
             })
 
             -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -81,10 +127,8 @@ return {
             -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
             local lspconfig = require('lspconfig')
             lspconfig.clangd.setup {
-                capabilities = capabilities
-            }
-            lspconfig.clangd.setup {
-                capabilities = capabilities
+                cmd = { "clangd", "--background-index", "--all-scopes-completion", "--suggest-missing-includes" },
+                capabilities = capabilities,
             }
             lspconfig.cssls.setup {
                 capabilities = capabilities
@@ -104,7 +148,22 @@ return {
             lspconfig.pylsp.setup {
                 capabilities = capabilities
             }
-                
+
+
+            vim.api.nvim_create_autocmd("TextChangedI", {
+                group = vim.api.nvim_create_augroup("CmpTriggerOnDotArrow", { clear = true }),
+                pattern = "*",
+                callback = function()
+                    local line = vim.api.nvim_get_current_line()
+                    local col = vim.api.nvim_win_get_cursor(0)[2]
+                    -- Check one char before and two chars before cursor
+                    local char_before = line:sub(col, col)
+                    local chars_before = line:sub(col - 1, col)
+                    if char_before == '.' or chars_before == '->' or chars_before == '::' then
+                        cmp.complete()
+                    end
+                end,
+            })
         end,
     },
 }
