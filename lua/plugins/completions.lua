@@ -45,10 +45,16 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+                    ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                    ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                    ['<Down>'] = cmp.config.disable,
+                    ['<Up>'] = cmp.config.disable,
+                    ['<Left>'] = cmp.config.disable,
+                    ['<Right>'] = cmp.config.disable,
                 }),
                 completion = {
-                    autocomplete = false,
+                    autocomplete = true,
                 },
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
@@ -89,13 +95,13 @@ return {
                     format = function(entry, vim_item)
                         if entry.source.name == "nvim_lsp" then
                             vim_item.menu = "LSP"
-                        elseif entry.source.name == "buffer" then 
+                        elseif entry.source.name == "buffer" then
                             vim_item.menu = "BUF"
-                        elseif entry.source.name == "path" then 
+                        elseif entry.source.name == "path" then
                             vim_item.menu = "PTH"
                         elseif entry.source.name == "nerdfont" then
                             vim_item.menu = "FNT"
-                        elseif entry.source.name == "fish" then 
+                        elseif entry.source.name == "fish" then
                             vim_item.menu = "FSH"
                         end
                         return vim_item
