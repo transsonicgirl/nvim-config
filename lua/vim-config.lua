@@ -31,3 +31,6 @@ vim.keymap.set("n", "<leader>Sl", ":source Session.vim<CR>", {silent=true, desc=
 
 -- splits
 vim.keymap.set("n", "<leader>v", ":vs<CR>", {silent=true, desc="vertical split"})
+
+-- line numbers
+vim.opt.number = true
