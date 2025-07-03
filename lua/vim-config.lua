@@ -34,3 +34,11 @@ vim.keymap.set("n", "<leader>v", ":vs<CR>", {silent=true, desc="vertical split"}
 
 -- line numbers
 vim.opt.number = true
+vim.opt.cursorline = true
+
+
+-- Diagnostics
+vim.diagnostic.config({
+    virtual_text=false,
+})
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc="Open diagnostic"})
