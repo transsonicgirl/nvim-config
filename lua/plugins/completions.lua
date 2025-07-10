@@ -21,6 +21,7 @@ return {
             'hrsh7th/cmp-cmdline',
             'chrisgrieser/cmp-nerdfont',
             'mtoohey31/cmp-fish',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
         },
         config = function()
             -- Set up nvim-cmp.
@@ -56,6 +57,7 @@ return {
                     { name = "path" },
                     { name = "nerdfont" },
                     { name = "fish" },
+                    { name = "nvim_lsp_signature_help" },
                 }),
                 sorting = {
                     comparators = {
