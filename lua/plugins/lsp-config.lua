@@ -1,55 +1,52 @@
-return{
-    { -- MASON (LSP manager)
-        "williamboman/mason.nvim",
-        config = function()
-            require("mason").setup()
-        end
-    },
-    { -- MASON-LSPCONFIG (installs LSPs)
-    "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = {"clangd", "cmake", "ltex", "lua_ls", "pylsp", "rust_analyzer"}
-            })
-        end
-    },
-    { -- LSPCONFIG (Allows using LSPs in Neovim)
-        "neovim/nvim-lspconfig",
-        lazy = false,
-        config = function()
-            local capabilities = require ('cmp_nvim_lsp').default_capabilities()
-            local lspconfig = require("lspconfig")
-            lspconfig.clangd.setup({
-                cmd = {"clangd", "--background-index", "--all-scopes-completion", "--suggest-missing-includes" },
-                capabilities = capabilities,
-            })
-            lspconfig.cmake.setup({
+return {
+	{ -- MASON (LSP manager)
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup()
+		end,
+	},
+	{ -- MASON-LSPCONFIG (installs LSPs)
+		"williamboman/mason-lspconfig.nvim",
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "clangd", "cmake", "ltex", "lua_ls", "pylsp", "rust_analyzer" },
+                automatic_enable = false,
+			})
+		end,
+	},
+	{ -- LSPCONFIG (Allows using LSPs in Neovim)
+		"neovim/nvim-lspconfig",
+		lazy = false,
+		config = function()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-                capabilities = capabilities
-            })
-            lspconfig.cssls.setup({
+			-- Define per-server configs with the new core API.
+			local servers = {
+				clangd = {
+					cmd = {
+						"clangd",
+						"--background-index",
+						"--all-scopes-completion",
+						"--suggest-missing-includes",
+						"--clang-tidy",
+					},
+					capabilities = capabilities,
+				},
+				cmake = { capabilities = capabilities },
+				cssls = { capabilities = capabilities },
+				html = { capabilities = capabilities },
+				ltex = { capabilities = capabilities },
+				lua_ls = { capabilities = capabilities },
+				rust_analyzer = { capabilities = capabilities },
+				pylsp = { capabilities = capabilities },
+			}
 
-                capabilities = capabilities
-            })
-            lspconfig.html.setup({
+			for name, cfg in pairs(servers) do
+				vim.lsp.config(name, cfg)
+			end
 
-                capabilities = capabilities
-            })
-            lspconfig.ltex.setup({
-
-                capabilities = capabilities
-            })
-            lspconfig.lua_ls.setup({
-
-                capabilities = capabilities
-            })
-            lspconfig.rust_analyzer.setup({
-
-                capabilities = capabilities
-            })
-            lspconfig.pylsp.setup({
-                capabilities = capabilities
-            })
-        end
-    },
+			-- Enable all configured servers (can be a list or a single name)
+			vim.lsp.enable(vim.tbl_keys(servers))
+		end,
+	},
 }
